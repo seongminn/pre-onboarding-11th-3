@@ -1,0 +1,32 @@
+import axios from 'axios';
+
+import { TARGET_PATH as TARGET_REPO } from '../constants/repo';
+
+const PERSONAL_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+export const client = axios.create({
+  baseURL: `${BASE_URL}${TARGET_REPO}`,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${PERSONAL_TOKEN}`,
+  },
+});
+
+client.interceptors.request.use(
+  (request) => {
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
+client.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
